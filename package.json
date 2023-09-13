@@ -1,0 +1,27 @@
+{
+  "name": "namaste-react-food",
+  "version": "1.0.0",
+  "description": "Food ordering App using react",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vamsi2348/Namaste-react-food.git"
+  },
+  "keywords": [
+    "Food"
+  ],
+  "author": "vamsi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vamsi2348/Namaste-react-food/issues"
+  },
+  "homepage": "https://github.com/vamsi2348/Namaste-react-food#readme",
+  "dependencies": {
+    "parcel": "^2.9.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
