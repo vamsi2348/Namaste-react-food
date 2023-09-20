@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from "react";
 import ResCard from "./ResCard";
+import Shimmer from './Shimmer'
 
 const Body = () => {
     const [restaurants, setRestaurants] = useState([]);
@@ -35,7 +36,12 @@ const Body = () => {
         setRestaurants(dummyRate);
     }
 
-    
+    if(restaurants.length === 0){
+
+        return <Shimmer></Shimmer>
+    }
+
+
 
     return(
         <div className='body'>
