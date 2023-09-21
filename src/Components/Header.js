@@ -1,7 +1,20 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { LOGO_URL } from '../utils/constans';
 
 const Header = () => {
+    const [loginout, setLoginout] = useState("Login");
+
+    const toogleLogin = () => {
+        //
+        if(loginout === "Login"){
+            setLoginout("Logout");
+        }else{
+            setLoginout("Login");
+
+        }
+    }
+
+    
     return (
         <div className='header'>
         {/* // logo */}
@@ -15,9 +28,13 @@ const Header = () => {
                 <li>About US</li>
                 <li>Contact US</li>
                 <li>Cart</li>
+                <li><button onClick={() => {
+                    loginout === "Login" ? setLoginout("Logout") : setLoginout("Login")
+                }}>{loginout}</button></li>
             </ul>
 
             </div>
+            
         </div>
         )
 }
