@@ -83,6 +83,8 @@ const Body = () => {
                             let filteredData = restaurants.filter((item) => item.info.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()))
                             if(filteredData.length === 0){
                                 setSearchRes(false);
+                                setFilteredrestaurants(restaurants);
+
                             }
                             else{
                                 setSearchRes(true);
