@@ -6,6 +6,9 @@ import Shimmer from './Shimmer'
 const Body = () => {
     const resData = MOCK_DATA?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     const [restaurants, setRestaurants] = useState(resData);
+    const [searchText, setSearchText] = useState("");
+    const [searchRes, setSearchRes] = useState(true);
+    console.log("Body rerendered")
 
     // useEffect(() => {
     //     fetchData();
@@ -47,9 +50,32 @@ const Body = () => {
 
     return(
         <div className='body'>
-            <div className='rating'> 
-                <button onClick={sortRatingabove4}>Highest Rating</button>
-            </div>
+                <div className='rating'> 
+                    <div className="search">
+                        <input type="text" className="search-box" value={searchText} onChange={(e) => {
+                            setSearchText(e.target.value)
+                        }}></input>{searchRes === false && <span style={{color:"red"}}>Search for a valid Input</span>}
+                        <button onClick={() => {
+                            console.log(searchText);
+                            let filteredData = restaurants.filter(item => {
+                                console.log(item.info.name)
+                                return item.info.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
+                            });
+                            if(filteredData.length>0){
+                                setRestaurants(filteredData);
+                                setSearchRes(true);
+
+
+                            }else{
+                                setSearchRes(false);
+                            }
+                        }}>Search</button>
+                    </div>
+                    <button onClick={sortRatingabove4} className="highest-rating">Highest Rating</button>
+                    
+                
+                 </div>
+           
             <div className='res-container'>
             {restaurants.map(item => <ResCard key={item.info.id} resData = {item}></ResCard>)}
                 {/* <ResCard resData = {restaurants}></ResCard>                 */}
