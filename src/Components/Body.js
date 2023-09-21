@@ -6,9 +6,10 @@ import Shimmer from './Shimmer'
 const Body = () => {
     const resData = MOCK_DATA?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     const [restaurants, setRestaurants] = useState(resData);
+    const [filteredrestaurants, setFilteredrestaurants] = useState(restaurants)
     const [searchText, setSearchText] = useState("");
     const [searchRes, setSearchRes] = useState(true);
-    console.log("Body rerendered")
+    console.log("Body rerendered",restaurants)
 
     // useEffect(() => {
     //     fetchData();
@@ -35,7 +36,7 @@ const Body = () => {
     const sortRatingabove4 = () => {
         let dummyRate = []
         dummyRate  = restaurants.filter(item => {
-            console.log(item);
+            // console.log(item);
             return item.info.avgRating > 4;
         });
         setRestaurants(dummyRate);
@@ -54,31 +55,52 @@ const Body = () => {
                     <div className="search">
                         <input type="text" className="search-box" value={searchText} onChange={(e) => {
                             setSearchText(e.target.value)
-                        }}></input>{searchRes === false && <span style={{color:"red"}}>Search for a valid Input</span>}
-                        <button onClick={() => {
+                        }}></input>
+                        {/* <button onClick={() => {
                             console.log(searchText);
-                            let filteredData = restaurants.filter(item => {
-                                console.log(item.info.name)
+                            if(searchText === ""){
+                                setRestaurants(resData);   
+                                console.log("empty",restaurants)                             
+                            }
+                            else{
+                                let filteredData = restaurants.filter(item => {
+                                // console.log(item.info.name)
+                                console.log("if goted",restaurants)
                                 return item.info.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
                             });
                             if(filteredData.length>0){
                                 setRestaurants(filteredData);
                                 setSearchRes(true);
-
-
                             }else{
                                 setSearchRes(false);
                                 setRestaurants(resData);
                             }
+
+                        }                            
+                            
+                        }}>Search</button> */}
+                        <button onClick={() => {
+                            let filteredData = restaurants.filter((item) => item.info.name.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()))
+                            if(filteredData.length === 0){
+                                setSearchRes(false);
+                            }
+                            else{
+                                setSearchRes(true);
+                                setFilteredrestaurants(filteredData);
+                            }
+                            
                         }}>Search</button>
+                        <br></br>{searchRes === false && <span style={{color:"red"}}>Search for a valid Input</span>}
+
                     </div>
                     <button onClick={sortRatingabove4} className="highest-rating">Highest Rating</button>
+                    <button onClick= {() => setRestaurants(resData)}>Load All</button>
                     
                 
                  </div>
            
             <div className='res-container'>
-            {restaurants.map(item => <ResCard key={item.info.id} resData = {item}></ResCard>)}
+            {filteredrestaurants.map(item => <ResCard key={item.info.id} resData = {item}></ResCard>)}
                 {/* <ResCard resData = {restaurants}></ResCard>                 */}
             </div>
             

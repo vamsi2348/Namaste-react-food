@@ -70,6 +70,11 @@
 
 
 .rating{
-    display: flex;
+    /* display: flex; */
 }
 
+.highest-rating{
+    margin: 10px;
+    /* width: 30px;
+    height:15px */
+}
