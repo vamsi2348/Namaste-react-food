@@ -5,11 +5,88 @@ import Shimmer from './Shimmer'
 
 const Body = () => {
     const resData = MOCK_DATA?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants
-    const [restaurants, setRestaurants] = useState(resData);
-    const [filteredrestaurants, setFilteredrestaurants] = useState(restaurants)
+
+    const [restaurants, setRestaurants] = useState([]);
+    const [filteredrestaurants, setFilteredrestaurants] = useState([])
     const [searchText, setSearchText] = useState("");
     const [searchRes, setSearchRes] = useState(true);
-    console.log("Body rerendered",restaurants)
+    console.log("body rendered")
+
+    useEffect(() => {
+        console.log("UseEffect called!!!!")
+        getApi();
+        // showResAccordingTheRating();
+
+    },[])
+
+    useEffect(() => {
+        console.log("restaurants use effect !!!!");
+        console.log("2nd use", restaurants)    //     // getApi()
+    },[restaurants])
+
+    const getApi = async () => {
+        try{
+            console.log("get api called")
+            console.log("getApi mock ",resData);
+            if(resData){
+                setRestaurants((prevState) => resData);
+
+                setFilteredrestaurants(resData);
+                console.log("get Api true");
+                console.log("filteredData", filteredrestaurants);
+            }
+          
+        }catch(error){
+            console.log("ooPS!!!!!!!")
+        }
+        
+        console.log("getApi rendendered",restaurants);
+        // await showResAccordingTheRating();
+    }
+
+    const showResAccordingTheRating = () =>{
+        // let sortedList = restaurants.map((item) => )
+        let sortedList = [...restaurants];
+        console.log("soretd list", sortedList)
+        // sortedList.push(restaurants[i]);
+        // for(let i=0 ; i< restaurants.length; i++){
+        //     if(sortedList.length === 0){
+        //         sortedList.push(restaurants[i]);
+        //     }
+        //     for(let j=0; j<sortedList.length;j++){
+                
+        //         if(restaurants[i].info.avgRating > sortedList[j].info.avgRating ){
+        //             sortedList.unshift(restaurants[i]);
+        //         }
+        //     }
+        // }
+        // console.log("getApi rerendered",restaurants);
+
+        for (let i = 0; i < sortedList.length; i++) {
+  
+            // Last i elements are already in place  
+            for (let j = 0; j < (sortedList.length - i - 1); j++) {
+      
+                // Checking if the item at present iteration 
+                // is greater than the next iteration
+                if (sortedList[j].info.avgRating > sortedList[j + 1].info.avgRating) {
+      
+                    // If the condition is true
+                    // then swap them
+                    var temp = sortedList[j]
+                    sortedList[j] = sortedList[j + 1]
+                    sortedList[j + 1] = temp
+                }
+            }
+        };
+        sortedList = sortedList.reverse()
+        console.log("showResAccordingTheRating",sortedList)
+
+        // setRestaurants(sortedList);
+        console.log("showResAccordingTheRating res",restaurants)
+        setFilteredrestaurants([...sortedList])
+        console.log("showResAccordingTheRating",filteredrestaurants)
+    }
 
     // useEffect(() => {
     //     fetchData();
@@ -39,7 +116,7 @@ const Body = () => {
             // console.log(item);
             return item.info.avgRating > 4;
         });
-        setRestaurants(dummyRate);
+        setFilteredrestaurants(dummyRate);
     }
 
     if(restaurants.length === 0){
@@ -96,8 +173,9 @@ const Body = () => {
 
                     </div>
                     <button onClick={sortRatingabove4} className="highest-rating">Highest Rating</button>
-                    <button onClick= {() => setRestaurants(resData)}>Load All</button>
-                    
+                    <button onClick= {() => {setFilteredrestaurants(restaurants)
+                    console.log("filteredrestaurants in load all",filteredrestaurants)}}>Load All</button>
+                    <button onClick={() => {showResAccordingTheRating()}}>Sort</button>
                 
                  </div>
            
